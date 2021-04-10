@@ -173,33 +173,27 @@
 
     .left {
         width: 240px;
-        height: 1000px;
-        background-color: #42b983;
         float: left;
+        margin-top: 30px;
     }
 
     .right {
         width: 1040px;
-        height: 1000px;
-        background-color: indianred;
         float: right;
     }
 
     .right_center {
         width: 1000px;
-        height: 800px;
-        background-color: aquamarine;
-        margin: 20px;
+        margin: 0 20px;
     }
 
 
     /*    头部头像*/
     .head .people {
         display: inline-block;
-        margin-right: 140px;
         margin-top: 30px;
         position: absolute;
-        right: 0;
+        right: 140px;
         top: 8px;
     }
 
