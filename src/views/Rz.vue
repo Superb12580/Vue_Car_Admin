@@ -23,7 +23,7 @@
               width="100px"
               label="操作相关">
         <template slot-scope="scope">
-          <span>{{scope.row.objectName === '' ? '空' : scope.row.objectName}}</span>
+          <span>{{scope.row.objectName === '' ? '暂无相关' : scope.row.objectName}}</span>
         </template>
       </el-table-column>
       <el-table-column

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div style="margin-left: 900px">
-            <el-button type="text" @click="dialogFormVisible = true, resetForm('labelForm')">添加标签</el-button>
+            <el-button type="text" @click="dialogFormVisible = true,title = '添加标签', resetForm('labelForm')">添加标签</el-button>
         </div>
         <el-table height="500px"
                   stripe
@@ -59,7 +59,7 @@
                     :total="page.total">
             </el-pagination>
         </div>
-        <el-dialog title="编辑标签" :visible.sync="dialogFormVisible">
+        <el-dialog :title="title" :visible.sync="dialogFormVisible">
             <el-form :model="labelForm" :rules="rulesLabel" ref="labelForm" label-width="100px" class="demo-ruleForm" style="margin-left: 140px">
                 <el-form-item label="标签名称" prop="labelText">
                     <el-input style="width: 300px" v-model="labelForm.labelText"></el-input>
@@ -86,6 +86,7 @@
                 total: 20,
                 size: 5
             },
+            title: '',
             dialogFormVisible: false,
             labelForm: {
                 labelId: '',
@@ -157,6 +158,7 @@
             this.labelForm.labelId = row.labelId
             this.labelForm.labelText = row.labelText
             this.dialogFormVisible = true
+            this.title = '编辑标签'
         },
         resetForm (formName) {
             this.$refs[formName].resetFields()

@@ -7,7 +7,7 @@
                 <el-avatar v-else :size="60"> {{user.userName}}</el-avatar>
                 <div class="others">
           <span>
-            <el-link type="primary" @click="center">个人中心</el-link>
+            <el-link type="primary" @click="dialogFormVisible = true">个人中心</el-link>
             <el-link type="danger" @click="layout">注 销</el-link>
           </span>
                 </div>
@@ -118,6 +118,18 @@
                 <router-view/>
             </div>
         </div>
+        <el-dialog title="个人资料" :visible.sync="dialogFormVisible">
+            <div style="text-align: center">
+                <el-image :src="user.photo" style="width: 80px;height: 80px">
+                    <div slot="placeholder" class="image-slot">
+                        加载中<span class="dot">...</span>
+                    </div>
+                </el-image>
+                <h3 style="color: red">汽车之家后台管理员</h3><br>
+                <span>{{user.userName}}</span><br><br><br>
+                <span>{{user.email}}</span><br>
+            </div>
+        </el-dialog>
     </div>
 </template>
 
@@ -127,7 +139,8 @@
         name: 'Home',
         data() {
             return {
-                user: {}
+                user: {},
+                dialogFormVisible: false
             }
         },
         methods: {
@@ -144,10 +157,6 @@
                 this.$store.commit('SET_USER', '')
                 this.$store.commit('REMOVE_USER', '')
                 this.$router.push('/login')
-            },
-            center() {
-                // this.$router.push('/grzl')
-                alert('个人中心')
             },
             // 提示
             msg(data) {
