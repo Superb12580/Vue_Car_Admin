@@ -1,7 +1,7 @@
 <template>
     <div>
         <div style="margin-left: 900px">
-            <el-button type="text" @click="dialogFormVisible = true,title = '添加标签', resetForm('labelForm')">添加标签</el-button>
+            <el-button type="text" @click="tj">添加标签</el-button>
         </div>
         <el-table height="500px"
                   stripe
@@ -94,7 +94,7 @@
             },
             rulesLabel: {
                 labelText: [
-                    { required: true, message: '请输入标签名', trigger: 'change' },
+                    { required: true, message: '请输入标签名', trigger: 'blur' },
                     { min: 2, max: 12, message: '长度在 2 到 12 个字符', trigger: 'change' }
                 ]
             }
@@ -124,12 +124,9 @@
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                this.$message({
-                    type: 'success',
-                    message: '删除成功!'
-                })
                 const that = this
                 this.axios.post('/label/deleteAdmin', row).then(function (rest) {
+                    that.msg("删除成功")
                     // 刷新页面
                     that.reload()
                 }, function (error) {
@@ -159,6 +156,12 @@
             this.labelForm.labelText = row.labelText
             this.dialogFormVisible = true
             this.title = '编辑标签'
+        },
+        // 添加弹窗
+        tj () {
+            this.labelForm.labelText = ''
+            this.dialogFormVisible = true
+            this.title = '添加标签'
         },
         resetForm (formName) {
             this.$refs[formName].resetFields()

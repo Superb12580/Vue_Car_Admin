@@ -30,7 +30,6 @@
 
 <style>
   #app {
-    max-width: 1300px;
     margin: 0 auto;
   }
 </style>

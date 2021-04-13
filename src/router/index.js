@@ -43,6 +43,11 @@ const routes = [
         component: () => import('../views/essay/Zf.vue')
       },
       {
+        path: '/dtxq',
+        name: 'Dtxq',
+        component: () => import('../views/essay/Dtxq.vue')
+      },
+      {
         path: '/dsh',
         name: 'Dsh',
         component: () => import('../views/news/Dsh.vue')
@@ -56,6 +61,11 @@ const routes = [
         path: '/ybh',
         name: 'Ybh',
         component: () => import('../views/news/Ybh.vue')
+      },
+      {
+        path: '/wzxq',
+        name: 'Wzxq',
+        component: () => import('../views/news/Wzxq.vue')
       },
       {
         path: '/cjh',
@@ -88,6 +98,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: () => import('../views/Login.vue')
+  },
+  {
+    path: '/login2',
+    name: 'Login2',
+    component: () => import('../views/Login2.vue')
   }
 ]
 

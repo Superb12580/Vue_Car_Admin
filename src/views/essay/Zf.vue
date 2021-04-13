@@ -6,6 +6,7 @@
           <div>
             <el-timeline>
               <el-timeline-item v-for='(record,index) in page.records' :key="index" placement="top">
+                <el-button style="float: right;margin-top: 60px" icon="el-icon-delete" type="text" @click="sc(record.id)">删除</el-button>
                 <h3><a href="###" @click="xq(record.userId)">{{record.user.userName}}</a><i class="vip"><img src="../../assets/vip.png" alt="vip" /> </i></h3>
                 <h2>{{record.forwardTitle}}</h2>
                 <h5>转发于 {{record.createTime}}</h5>
@@ -14,7 +15,7 @@
                     <img style="width: 80px;height: 80px" v-if="record.essay.user.photo" :src="record.essay.user.photo">
                     <el-avatar v-else :size="80" style="color: indianred"> {{record.essay.user.userName}} </el-avatar>
                   </el-button>
-                  <h2><router-link :to="{name: 'dtxq',query: {essayId: record.essay.essayId}}">{{record.essay.essayTitle}}</router-link></h2>
+                  <h2><router-link :to="{path: '/dtxq',query: {essayId: record.essay.essayId}}">{{record.essay.essayTitle}}</router-link></h2>
                   <h4 style="color: red" v-if="record.essay.essayLabel">
                     <span style="margin-right: 20px" v-for="item in record.essay.essayLabel">#{{item.labelText}}#</span>
                   </h4>
@@ -53,6 +54,7 @@
           <div>
             <el-timeline>
               <el-timeline-item v-for='(record,index) in page2.records' :key="index" placement="top">
+                <el-button style="float: right;margin-top: 60px" type="text" @click="fb(record.id)">重新发布</el-button>
                 <h3><a href="###" @click="xq(record.userId)">{{record.user.userName}}</a><i class="vip"><img src="../../assets/vip.png" alt="vip" /> </i></h3>
                 <h2>{{record.forwardTitle}}</h2>
                 <h5>转发于 {{record.createTime}}</h5>
@@ -61,7 +63,7 @@
                     <img style="width: 80px;height: 80px" v-if="record.essay.user.photo" :src="record.essay.user.photo">
                     <el-avatar v-else :size="80" style="color: indianred"> {{record.essay.user.userName}} </el-avatar>
                   </el-button>
-                  <h2><router-link :to="{name: 'dtxq',query: {essayId: record.essay.essayId}}">{{record.essay.essayTitle}}</router-link></h2>
+                  <h2><router-link :to="{path: '/dtxq',query: {essayId: record.essay.essayId}}">{{record.essay.essayTitle}}</router-link></h2>
                   <h4 style="color: red" v-if="record.essay.essayLabel">
                     <span style="margin-right: 20px" v-for="item in record.essay.essayLabel">#{{item.labelText}}#</span>
                   </h4>
@@ -100,11 +102,12 @@
     <el-dialog title="个人资料" :visible.sync="dialogFormVisible">
       <div style="height: 300px">
         <div style="text-align: center">
-          <el-image :src="user.photo" style="width: 80px;height: 80px">
+          <el-image v-if="user.photo" :src="user.photo" style="width: 80px;height: 80px">
             <div slot="placeholder" class="image-slot">
               加载中<span class="dot">...</span>
             </div>
           </el-image>
+          <el-avatar v-else :size="80"> {{user.userName}} </el-avatar>
           <h4>{{user.sign}}</h4>
         </div>
         <div>
@@ -142,20 +145,21 @@
 
 <script>export default {
   name: 'Zf',
+  inject: ['reload'],
   data() {
     return {
       // 发布
       page: {
         records: [],
         current: 1,
-        total: 0,
+        total: 20,
         size: 5
       },
       // 删除
       page2: {
         records: [],
         current: 1,
-        total: 0,
+        total: 20,
         size: 5
       },
       dialogFormVisible: false,
@@ -207,6 +211,58 @@
         that.user = rest.data.data
       }, function (error) {
         console.log(error)
+      })
+    },
+    // 下架动态
+    sc(id) {
+      const that = this
+      this.$confirm('此操作将变更设置, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.axios.post('/forward/deleteAdmin', {id: id}).then(function (rest) {
+          that.msg(rest.data.msg)
+          // 刷新页面
+          that.reload()
+        }, function (error) {
+          console.log(error)
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
+    // 重新发布
+    fb(id) {
+      const that = this
+      this.$confirm('此操作将变更设置, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.axios.post('/forward/fbAdmin', {id: id}).then(function (rest) {
+          that.msg(rest.data.msg)
+          // 刷新页面
+          that.reload()
+        }, function (error) {
+          console.log(error)
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
+    // 提示
+    msg (data) {
+      this.$message({
+        showClose: true,
+        message: data,
+        type: 'success'
       })
     }
   },

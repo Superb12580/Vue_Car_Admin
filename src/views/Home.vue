@@ -19,6 +19,7 @@
                         :default-active="$route.path"
                         class="el-menu-vertical-demo"
                         router
+                        unique-opened="true"
                         background-color="#545c64"
                         text-color="#fff"
                         active-text-color="#ffd04b">
@@ -120,11 +121,12 @@
         </div>
         <el-dialog title="个人资料" :visible.sync="dialogFormVisible">
             <div style="text-align: center">
-                <el-image :src="user.photo" style="width: 80px;height: 80px">
+                <el-image v-if="user.photo" :src="user.photo" style="width: 80px;height: 80px">
                     <div slot="placeholder" class="image-slot">
                         加载中<span class="dot">...</span>
                     </div>
                 </el-image>
+                <el-avatar v-else :size="80"> {{user.userName}} </el-avatar>
                 <h3 style="color: red">汽车之家后台管理员</h3><br>
                 <span>{{user.userName}}</span><br><br><br>
                 <span>{{user.email}}</span><br>
@@ -177,32 +179,34 @@
         width: 1300px;
         height: 100px;
         background-color: rebeccapurple;
-        margin: 20px auto;
+        margin: 10px auto;
     }
 
     .left {
         width: 240px;
         float: left;
-        margin-top: 30px;
+        margin-top: 10px;
+        margin-left: 110px;
     }
 
     .right {
         width: 1040px;
         float: right;
+        margin-right: 110px;
     }
 
     .right_center {
         width: 1000px;
-        margin: 0 20px;
+        margin: 15px 20px;
     }
 
 
     /*    头部头像*/
     .head .people {
         display: inline-block;
-        margin-top: 30px;
+        margin-top: 20px;
         position: absolute;
-        right: 140px;
+        left: 1320px;
         top: 8px;
     }
 
@@ -235,7 +239,7 @@
 
     .head .people .others {
         width: 100px;
-        height: 70px;
+        height: 60px;
         background-color: #fff;
         opacity: 0;
         z-index: 10;

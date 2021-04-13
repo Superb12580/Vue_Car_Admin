@@ -6,8 +6,10 @@
               style="width: 100%">
       <el-table-column
               width="120px"
-              label="用户名"
-              prop="userName">
+              label="用户名">
+        <template slot-scope="scope">
+          <span><b>{{scope.row.userName}}</b></span>
+        </template>
       </el-table-column>
       <el-table-column
               width="100px"
@@ -28,10 +30,8 @@
       </el-table-column>
       <el-table-column
               width="80px"
-              label="是否认证">
-        <template slot-scope="scope">
-          <span>{{scope.row.sfrz === 1 ? '已认证' : '未认证'}}</span>
-        </template>
+              label="积分"
+              prop="grade">
       </el-table-column>
       <el-table-column
               width="300px"
@@ -67,11 +67,12 @@
     <el-dialog title="个人资料" :visible.sync="dialogFormVisible">
       <div style="height: 300px">
         <div style="text-align: center">
-          <el-image :src="user.photo" style="width: 80px;height: 80px">
+          <el-image v-if="user.photo" :src="user.photo" style="width: 80px;height: 80px">
             <div slot="placeholder" class="image-slot">
               加载中<span class="dot">...</span>
             </div>
           </el-image>
+          <el-avatar v-else :size="80"> {{user.userName}} </el-avatar>
           <h4>{{user.sign}}</h4>
         </div>
         <div>

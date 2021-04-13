@@ -134,7 +134,7 @@
         <el-dialog title="折叠板详情" :visible.sync="dialogXqVisible" width="1000px">
             <div style="height: 300px">
                 <!--      折叠图开始-->
-                <div style="float: left">
+                <div style="float: left;margin-left: 25px">
                     <router-link :to="{name: '',query: {styleId: imgZb.styleId}}">
                         <el-image :src="imgZb.stylePhoto" style="width: 400px;height: 250px">
                             <div slot="placeholder" class="image-slot">
@@ -145,7 +145,7 @@
                 </div>
                 <!--      折叠图结束-->
                 <!--      折叠文开始-->
-                <div style="width: 450px;margin-left: 450px">
+                <div style="width: 450px;margin-left: 460px">
                     <el-collapse v-model="imgZb.activeName" accordion>
                         <el-collapse-item>
                             <template slot="title">
@@ -316,10 +316,7 @@
             }).then(() => {
                 const that = this
                 this.axios.post('/fold/delete', row).then(function (rest) {
-                    that.$message({
-                        type: 'success',
-                        message: '删除成功!'
-                    })
+                    that.msg("删除成功")
                     // 刷新页面
                     that.reload()
                 }, function (error) {
@@ -386,12 +383,12 @@
                     that.dialogFormVisible = false
                     that.resetForm('foldForm')
                     that.msg("保存成功")
+                    that.reload()
                 } else {
                     console.log('error submit!!')
                     return false
                 }
             })
-            that.reload()
         }
     },
     created() {
