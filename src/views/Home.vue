@@ -1,15 +1,20 @@
 <template>
     <div class="home">
         <div class="head">
+            <div style="float: left">
             <router-link :to="{path: '/'}"><img src="../assets/logo.png"></router-link>
+            </div>
+            <div style="float: left;margin-top: 15px">
+                <h1>后台管理</h1>
+            </div>
             <div class="people">
                 <img v-if="user.photo" :src="user.photo">
                 <el-avatar v-else :size="60"> {{user.userName}}</el-avatar>
                 <div class="others">
-          <span>
-            <el-link type="primary" @click="dialogFormVisible = true">个人中心</el-link>
-            <el-link type="danger" @click="layout">注 销</el-link>
-          </span>
+                    <span>
+                        <el-link type="primary" @click="dialogFormVisible = true">个人中心</el-link>
+                        <el-link type="danger" @click="layout">注 销</el-link>
+                    </span>
                 </div>
             </div>
         </div>
@@ -126,7 +131,7 @@
                         加载中<span class="dot">...</span>
                     </div>
                 </el-image>
-                <el-avatar v-else :size="80"> {{user.userName}} </el-avatar>
+                <el-avatar v-else :size="80"> {{user.userName}}</el-avatar>
                 <h3 style="color: red">汽车之家后台管理员</h3><br>
                 <span>{{user.userName}}</span><br><br><br>
                 <span>{{user.email}}</span><br>
@@ -178,8 +183,9 @@
     .head {
         width: 1300px;
         height: 100px;
-        background-color: rebeccapurple;
+        /*background-color: #ddd;*/
         margin: 10px auto;
+        border: 1px solid #ccc;
     }
 
     .left {
@@ -197,7 +203,7 @@
 
     .right_center {
         width: 1000px;
-        margin: 15px 20px;
+        margin: 10px 20px;
     }
 
 

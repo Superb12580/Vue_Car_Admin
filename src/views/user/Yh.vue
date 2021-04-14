@@ -60,7 +60,6 @@
         </el-table>
         <div>
             <el-pagination
-                    background="true"
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
                     :current-page="page.current"
@@ -158,13 +157,13 @@
             }).then(() => {
                 const that = this
                 if (row.sfrz === 0) {
-                    this.axios.post('/user/rz', {userId: row.userId}).then(function (rest) {
+                    this.axios.post('/user/rz', {userId: row.userId, userName: row.userName}).then(function (rest) {
                         that.msg(rest.data.msg)
                     }, function (error) {
                         console.log(error)
                     })
                 } else {
-                    this.axios.post('/user/qxrz', {userId: row.userId}).then(function (rest) {
+                    this.axios.post('/user/qxrz', {userId: row.userId, userName: row.userName}).then(function (rest) {
                         that.msg(rest.data.msg)
                     }, function (error) {
                         console.log(error)

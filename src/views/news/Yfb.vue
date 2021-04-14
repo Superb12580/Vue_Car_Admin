@@ -26,7 +26,6 @@
       </div>
       <div style="float: left;margin: 30px 0 30px 50px">
         <el-pagination
-                background="true"
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
                 :current-page="page.current"

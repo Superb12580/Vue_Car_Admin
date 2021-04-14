@@ -46,7 +46,6 @@
     </el-table>
     <div>
       <el-pagination
-              background="true"
               @size-change="handleSizeChange"
               @current-change="handleCurrentChange"
               :current-page="page.current"
@@ -189,7 +188,7 @@
 
 <style scoped>
   a {
-    color: #000;
+    color: #606266;
     text-decoration: none;
   }
   a:hover {

@@ -7,7 +7,7 @@
                         <el-timeline>
                             <el-timeline-item v-for='(record,index) in page.records' :key="index" placement="top">
                                 <el-button style="margin-left: 830px" icon="el-icon-delete" type="text"
-                                           @click="sc(record.essayId)">删除
+                                           @click="sc(record.essayId, record.essayTitle)">删除
                                 </el-button>
                                 <el-card style="padding-left: 50px">
                                     <el-button @click="xq(record.userId)">
@@ -41,7 +41,6 @@
                     </div>
                     <div>
                         <el-pagination
-                                background="true"
                                 @size-change="handleSizeChange"
                                 @current-change="handleCurrentChange"
                                 :current-page="page.current"
@@ -59,7 +58,7 @@
                     <div>
                         <el-timeline>
                             <el-timeline-item v-for='(record,index) in page2.records' :key="index" placement="top">
-                                <el-button style="margin-left: 830px" type="text" @click="fb(record.essayId)">重新发布
+                                <el-button style="margin-left: 830px" type="text" @click="fb(record.essayId, record.essayTitle)">重新发布
                                 </el-button>
                                 <el-card style="padding-left: 50px">
                                     <el-button @click="xq(record.userId)">
@@ -93,7 +92,6 @@
                     </div>
                     <div>
                         <el-pagination
-                                background="true"
                                 @size-change="handleSizeChange2"
                                 @current-change="handleCurrentChange2"
                                 :current-page="page2.current"
@@ -223,14 +221,14 @@
             })
         },
         // 下架动态
-        sc(essayId) {
+        sc(essayId, essayTitle) {
             const that = this
             this.$confirm('此操作将变更设置, 是否继续?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                this.axios.post('/essay/deleteAdmin', {essayId: essayId}).then(function (rest) {
+                this.axios.post('/essay/deleteAdmin', {essayId: essayId, essayTitle: essayTitle}).then(function (rest) {
                     that.msg(rest.data.msg)
                     // 刷新页面
                     that.reload()
@@ -245,14 +243,14 @@
             })
         },
         // 重新发布
-        fb(essayId) {
+        fb(essayId, essayTitle) {
             const that = this
             this.$confirm('此操作将变更设置, 是否继续?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                this.axios.post('/essay/fbAdmin', {essayId: essayId}).then(function (rest) {
+                this.axios.post('/essay/fbAdmin', {essayId: essayId, essayTitle: essayTitle}).then(function (rest) {
                     that.msg(rest.data.msg)
                     // 刷新页面
                     that.reload()

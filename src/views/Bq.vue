@@ -9,8 +9,10 @@
                   style="width: 100%">
             <el-table-column
                     width="200px"
-                    label="标签名称"
-                    prop="labelText">
+                    label="标签名称">
+                <template slot-scope="scope">
+                    <span><b>{{scope.row.labelText}}</b></span>
+                </template>
             </el-table-column>
             <el-table-column
                     width="200px"
@@ -49,7 +51,6 @@
         </el-table>
         <div>
             <el-pagination
-                    background="true"
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
                     :current-page="page.current"

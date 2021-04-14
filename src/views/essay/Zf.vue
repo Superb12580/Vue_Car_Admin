@@ -6,7 +6,7 @@
           <div>
             <el-timeline>
               <el-timeline-item v-for='(record,index) in page.records' :key="index" placement="top">
-                <el-button style="float: right;margin-top: 60px" icon="el-icon-delete" type="text" @click="sc(record.id)">删除</el-button>
+                <el-button style="float: right;margin-top: 60px" icon="el-icon-delete" type="text" @click="sc(record.id, record.forwardTitle)">删除</el-button>
                 <h3><a href="###" @click="xq(record.userId)">{{record.user.userName}}</a><i class="vip"><img src="../../assets/vip.png" alt="vip" /> </i></h3>
                 <h2>{{record.forwardTitle}}</h2>
                 <h5>转发于 {{record.createTime}}</h5>
@@ -36,7 +36,6 @@
           </div>
           <div>
             <el-pagination
-                    background="true"
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
                     :current-page="page.current"
@@ -54,7 +53,7 @@
           <div>
             <el-timeline>
               <el-timeline-item v-for='(record,index) in page2.records' :key="index" placement="top">
-                <el-button style="float: right;margin-top: 60px" type="text" @click="fb(record.id)">重新发布</el-button>
+                <el-button style="float: right;margin-top: 60px" type="text" @click="fb(record.id, record.forwardTitle)">重新发布</el-button>
                 <h3><a href="###" @click="xq(record.userId)">{{record.user.userName}}</a><i class="vip"><img src="../../assets/vip.png" alt="vip" /> </i></h3>
                 <h2>{{record.forwardTitle}}</h2>
                 <h5>转发于 {{record.createTime}}</h5>
@@ -84,7 +83,6 @@
           </div>
           <div>
             <el-pagination
-                    background="true"
                     @size-change="handleSizeChange2"
                     @current-change="handleCurrentChange2"
                     :current-page="page2.current"
@@ -214,14 +212,14 @@
       })
     },
     // 下架动态
-    sc(id) {
+    sc(id, forwardTitle) {
       const that = this
       this.$confirm('此操作将变更设置, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.axios.post('/forward/deleteAdmin', {id: id}).then(function (rest) {
+        this.axios.post('/forward/deleteAdmin', {id: id, forwardTitle: forwardTitle}).then(function (rest) {
           that.msg(rest.data.msg)
           // 刷新页面
           that.reload()
@@ -236,14 +234,14 @@
       })
     },
     // 重新发布
-    fb(id) {
+    fb(id, forwardTitle) {
       const that = this
       this.$confirm('此操作将变更设置, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.axios.post('/forward/fbAdmin', {id: id}).then(function (rest) {
+        this.axios.post('/forward/fbAdmin', {id: id, forwardTitle: forwardTitle}).then(function (rest) {
           that.msg(rest.data.msg)
           // 刷新页面
           that.reload()

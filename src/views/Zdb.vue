@@ -1,8 +1,7 @@
 <template>
     <div>
         <div style="margin-left: 900px">
-            <el-button type="text" @click="tj">添加折叠板
-            </el-button>
+            <el-button type="text" @click="dialogFormVisible = true, resetForm('foldForm')">添加折叠板</el-button>
         </div>
         <el-table height="530px"
                   stripe
@@ -10,8 +9,10 @@
                   style="width: 100%">
             <el-table-column
                     width="150px"
-                    label="车名称"
-                    prop="style.styleName">
+                    label="车名称">
+                <template slot-scope="scope">
+                    <span><b>{{scope.row.style.styleName}}</b></span>
+                </template>
             </el-table-column>
             <el-table-column
                     width="150px"
@@ -51,7 +52,6 @@
         </el-table>
         <div>
             <el-pagination
-                    background="true"
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
                     :current-page="page.current"
@@ -61,7 +61,7 @@
                     :total="page.total">
             </el-pagination>
         </div>
-        <el-dialog :title="title" :visible.sync="dialogFormVisible">
+        <el-dialog title="添加" :visible.sync="dialogFormVisible">
             <el-form :model="foldForm" :rules="rulesFold" ref="foldForm" label-width="80px" class="demo-ruleForm" style="margin: 0 50px">
                 <el-form-item label="关联车型" prop="styleId">
                     <el-select style="width: 300px" v-model="foldForm.styleId" placeholder="请选择">
@@ -74,15 +74,16 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="上传封面" ref="uploadElement" prop="stylePhoto">
-                    <el-input v-model="foldForm.stylePhoto" v-if="false"></el-input>
+<!--                    <el-input v-model="foldForm.stylePhoto" v-if="false"></el-input>-->
                     <el-upload
                             class="avatar-uploader"
                             ref="upload"
                             :show-file-list="false"
-                            action="http://localhost:8081/car/fold/addUpdate"
+                            action="http://localhost:8081/car/fold/addAdmin"
                             :before-upload="beforeUpload"
                             :on-change="handleChange"
                             :auto-upload="false"
+                            :on-success="success"
                             :data="this.foldForm">
                         <img v-if="foldForm.stylePhoto" :src="foldForm.stylePhoto" class="avatar" style="width: 300px">
                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -124,10 +125,79 @@
                 <el-form-item label="段落2" prop="text8">
                     <el-input type="textarea" :rows="2" placeholder="请输入第八段内容" v-model="foldForm.text8"></el-input>
                 </el-form-item>
-                <el-input v-model="foldForm.id" type="hidden"></el-input>
                 <el-form-item>
                     <el-button type="primary" @click="submitFoldForm ('foldForm')">保存</el-button>
                     <el-button @click="resetForm ('foldForm')">重置</el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
+<!--        编辑-->
+        <el-dialog title="编辑" :visible.sync="dialogForm2Visible">
+            <el-form :model="foldForm2" :rules="rulesFold2" ref="foldForm2" label-width="80px" class="demo-ruleForm" style="margin: 0 50px">
+                <el-form-item label="关联车型" prop="styleIdBj">
+                    <el-select style="width: 300px" v-model="foldForm2.styleId" placeholder="请选择">
+                        <el-option
+                                v-for="item in options"
+                                :key="item.styleId"
+                                :label="item.styleName"
+                                :value="item.styleId">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="上传封面" ref="uploadElement" prop="stylePhotoBj">
+<!--                    <el-input v-model="foldForm2.stylePhoto" v-if="false"></el-input>-->
+                    <el-upload
+                            class="avatar-uploader"
+                            ref="upload"
+                            :show-file-list="false"
+                            action="http://localhost:8081/car/fold/updatePhoto"
+                            :before-upload="beforeUpload2"
+                            :on-change="handleChange2"
+                            :auto-upload="true"
+                            :data="this.foldForm2">
+                        <img v-if="foldForm2.stylePhoto" :src="foldForm2.stylePhoto" class="avatar" style="width: 300px">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                </el-form-item>
+                <el-form-item label="标题一" prop="title1">
+                    <el-input placeholder="请输入标题一" v-model="foldForm2.title1"></el-input>
+                </el-form-item>
+                <el-form-item label="段落1" prop="text1">
+                    <el-input type="textarea" :rows="2" placeholder="请输入第一段内容" v-model="foldForm2.text1"></el-input>
+                </el-form-item>
+                <el-form-item label="段落2" prop="text2">
+                    <el-input type="textarea" :rows="2" placeholder="请输入第二段内容" v-model="foldForm2.text2"></el-input>
+                </el-form-item>
+                <el-form-item label="标题二" prop="title2">
+                    <el-input placeholder="请输入标题二" v-model="foldForm2.title2"></el-input>
+                </el-form-item>
+                <el-form-item label="段落1" prop="text3">
+                    <el-input type="textarea" :rows="2" placeholder="请输入第三段内容" v-model="foldForm2.text3"></el-input>
+                </el-form-item>
+                <el-form-item label="段落2" prop="text4">
+                    <el-input type="textarea" :rows="2" placeholder="请输入第四段内容" v-model="foldForm2.text4"></el-input>
+                </el-form-item>
+                <el-form-item label="标题三" prop="title3">
+                    <el-input placeholder="请输入标题三" v-model="foldForm2.title3"></el-input>
+                </el-form-item>
+                <el-form-item label="段落1" prop="text5">
+                    <el-input type="textarea" :rows="2" placeholder="请输入第五段内容" v-model="foldForm2.text5"></el-input>
+                </el-form-item>
+                <el-form-item label="段落2" prop="text6">
+                    <el-input type="textarea" :rows="2" placeholder="请输入第六段内容" v-model="foldForm2.text6"></el-input>
+                </el-form-item>
+                <el-form-item label="标题四" prop="title4">
+                    <el-input placeholder="请输入标题四" v-model="foldForm2.title4"></el-input>
+                </el-form-item>
+                <el-form-item label="段落1" prop="text7">
+                    <el-input type="textarea" :rows="2" placeholder="请输入第七段内容" v-model="foldForm2.text7"></el-input>
+                </el-form-item>
+                <el-form-item label="段落2" prop="text8">
+                    <el-input type="textarea" :rows="2" placeholder="请输入第八段内容" v-model="foldForm2.text8"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="submitFoldForm2 ('foldForm2')">保存</el-button>
+                    <el-button @click="resetForm ('foldForm2')">重置</el-button>
                 </el-form-item>
             </el-form>
         </el-dialog>
@@ -198,11 +268,11 @@
             },
             // 下拉框
             options: [],
-            title: '',
             dialogFormVisible: false,
+            dialogForm2Visible: false,
             dialogXqVisible: false,
+            // 添加
             foldForm: {
-                id: '',
                 styleId: '',
                 stylePhoto: '',
                 title1: '',
@@ -219,8 +289,78 @@
                 text8: '',
             },
             rulesFold: {
+                styleId: {required: true, message: '请关联车型', trigger: 'change'},
+                stylePhoto: {required: true, message: '请上传折叠板图片', trigger: 'change'},
+                title1: [
+                    {required: true, message: '请输入标题一', trigger: 'blur'},
+                    {min: 2, max: 35, message: '长度在 2 到 35 个字符', trigger: 'change'}
+                ],
+                title2: [
+                    {required: true, message: '请输入标题二', trigger: 'blur'},
+                    {min: 2, max: 35, message: '长度在 2 到 35 个字符', trigger: 'change'}
+                ],
+                title3: [
+                    {required: true, message: '请输入标题三', trigger: 'blur'},
+                    {min: 2, max: 35, message: '长度在 2 到 35 个字符', trigger: 'change'}
+                ],
+                title4: [
+                    {required: true, message: '请输入标题四', trigger: 'blur'},
+                    {min: 2, max: 35, message: '长度在 2 到 35 个字符', trigger: 'change'}
+                ],
+                text1: [
+                    {required: true, message: '必填项', trigger: 'blur'},
+                    {min: 2, max: 35, message: '建议长度在25个字符左右', trigger: 'change'}
+                ],
+                text2: [
+                    {required: true, message: '必填项', trigger: 'blur'},
+                    {min: 2, max: 35, message: '建议长度在25个字符左右', trigger: 'change'}
+                ],
+                text3: [
+                    {required: true, message: '必填项', trigger: 'blur'},
+                    {min: 2, max: 35, message: '建议长度在25个字符左右', trigger: 'change'}
+                ],
+                text4: [
+                    {required: true, message: '必填项', trigger: 'blur'},
+                    {min: 2, max: 35, message: '建议长度在25个字符左右', trigger: 'change'}
+                ],
+                text5: [
+                    {required: true, message: '必填项', trigger: 'blur'},
+                    {min: 2, max: 35, message: '建议长度在25个字符左右', trigger: 'change'}
+                ],
+                text6: [
+                    {required: true, message: '必填项', trigger: 'blur'},
+                    {min: 2, max: 35, message: '建议长度在25个字符左右', trigger: 'change'}
+                ],
+                text7: [
+                    {required: true, message: '必填项', trigger: 'blur'},
+                    {min: 2, max: 35, message: '建议长度在25个字符左右', trigger: 'change'}
+                ],
+                text8: [
+                    {required: true, message: '必填项', trigger: 'blur'},
+                    {min: 2, max: 35, message: '建议长度在25个字符左右', trigger: 'change'}
+                ]
+            },
+            // 编辑
+            foldForm2: {
+                id: '',
+                styleId: '',
+                stylePhoto: '',
+                title1: '',
+                title2: '',
+                title3: '',
+                title4: '',
+                text1: '',
+                text2: '',
+                text3: '',
+                text4: '',
+                text5: '',
+                text6: '',
+                text7: '',
+                text8: '',
+            },
+            rulesFold2: {
                 styleId: {required: true, message: '请关联车型', trigger: 'blur'},
-                stylePhoto: {required: true, message: '请上传折叠板图片', trigger: 'blur'},
+                stylePhoto: {required: true, message: '请上传折叠板图片', trigger: 'change'},
                 title1: [
                     {required: true, message: '请输入标题一', trigger: 'blur'},
                     {min: 2, max: 35, message: '长度在 2 到 35 个字符', trigger: 'change'}
@@ -333,19 +473,11 @@
         bj(index, row) {
             const that = this
             this.axios.get('/fold/itemAdmin?id=' + row.id).then(function (rest) {
-                that.foldForm = rest.data.data
+                that.foldForm2 = rest.data.data
             }, function (error) {
                 console.log(error)
             })
-            this.dialogFormVisible = true
-            this.title = '编辑折叠板'
-        },
-        // 添加
-        tj() {
-            this.dialogFormVisible = true
-            this.title = '添加折叠板'
-            this.resetForm('foldForm')
-            this.foldForm.id = ''
+            this.dialogForm2Visible = true
         },
         xq(index, row) {
             const that = this
@@ -366,6 +498,18 @@
         beforeUpload(file) {
             return true
         },
+        handleChange2(file, fileList) {
+            this.foldForm2.stylePhoto = URL.createObjectURL(file.raw)
+        },
+        beforeUpload2(file) {
+            return true
+        },
+        // 添加成功
+        success() {
+            this.resetForm('foldForm')
+            this.msg("保存成功")
+            this.reload()
+        },
         // 提示
         msg(data) {
             this.$message({
@@ -374,16 +518,31 @@
                 type: 'success'
             })
         },
-        // 保存
+        // 添加保存
         submitFoldForm(formName) {
             const that = this
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     that.$refs.upload.submit()
                     that.dialogFormVisible = false
-                    that.resetForm('foldForm')
-                    that.msg("保存成功")
-                    that.reload()
+                } else {
+                    console.log('error submit!!')
+                    return false
+                }
+            })
+        },
+        // 编辑保存
+        submitFoldForm2(formName) {
+            const that = this
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    this.axios.post('/fold/updateAdmin', this.foldForm2).then(function (rest) {
+                        that.resetForm('foldForm2')
+                        that.msg(rest.data.msg)
+                        that.reload()
+                    }, function (error) {
+                        console.log(error)
+                    })
                 } else {
                     console.log('error submit!!')
                     return false

@@ -72,7 +72,6 @@
           </div>
           <div style="margin-top: 20px">
             <el-pagination
-              background="true"
               @size-change="handleSizeChange"
               @current-change="handleCurrentChange"
               :current-page="page.current"

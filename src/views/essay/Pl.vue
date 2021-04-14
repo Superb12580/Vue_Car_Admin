@@ -6,7 +6,7 @@
           <div>
             <el-timeline>
               <el-timeline-item v-for='(record,index) in page.records' :key="index" placement="top">
-                <el-button style="float: right;margin-top: 60px" icon="el-icon-delete" type="text" @click="sc(record.id)">删除</el-button>
+                <el-button style="float: right;margin-top: 60px" icon="el-icon-delete" type="text" @click="sc(record.id, record.commentText)">删除</el-button>
                 <h3><a href="###" @click="xq(record.userId)">{{record.user.userName}}</a><i class="vip"><img src="../../assets/vip.png" alt="vip" /> </i></h3>
                 <h3 v-if="record.commentText">{{record.commentText}}</h3>
                 <h3 v-else style="width: 15px;height: 10px;"></h3>
@@ -37,7 +37,6 @@
           </div>
           <div>
             <el-pagination
-                    background="true"
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
                     :current-page="page.current"
@@ -55,7 +54,7 @@
           <div>
             <el-timeline>
               <el-timeline-item v-for='(record,index) in page2.records' :key="index" placement="top">
-                <el-button style="float: right;margin-top: 60px" type="text" @click="fb(record.id)">重新发布</el-button>
+                <el-button style="float: right;margin-top: 60px" type="text" @click="fb(record.id, record.commentText)">重新发布</el-button>
                 <h3><a href="###" @click="xq(record.userId)">{{record.user.userName}}</a><i class="vip"><img src="../../assets/vip.png" alt="vip" /> </i></h3>
                 <h3 v-if="record.commentText">{{record.commentText}}</h3>
                 <h3 v-else style="width: 15px;height: 10px;"></h3>
@@ -86,7 +85,6 @@
           </div>
           <div>
             <el-pagination
-                    background="true"
                     @size-change="handleSizeChange2"
                     @current-change="handleCurrentChange2"
                     :current-page="page2.current"
@@ -216,14 +214,14 @@
       })
     },
     // 下架评论
-    sc(id) {
+    sc(id, commentText) {
       const that = this
       this.$confirm('此操作将变更设置, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.axios.post('/comment/deleteAdmin', {id: id}).then(function (rest) {
+        this.axios.post('/comment/deleteAdmin', {id: id, commentText: commentText}).then(function (rest) {
           that.msg(rest.data.msg)
           // 刷新页面
           that.reload()
@@ -238,14 +236,14 @@
       })
     },
     // 发布
-    fb(id) {
+    fb(id, commentText) {
       const that = this
       this.$confirm('此操作将变更设置, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.axios.post('/comment/fbAdmin', {id: id}).then(function (rest) {
+        this.axios.post('/comment/fbAdmin', {id: id, commentText}).then(function (rest) {
           that.msg(rest.data.msg)
           // 刷新页面
           that.reload()
