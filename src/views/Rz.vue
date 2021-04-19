@@ -5,7 +5,7 @@
               :data="page.records.filter(data => !search || data.nr.toLowerCase().includes(search.toLowerCase()))"
               style="width: 100%">
       <el-table-column
-              width="200px"
+              width="120px"
               label="操作人">
         <template slot-scope="scope">
           <a href="#" @click="xq(scope.row.userId)" v-if="scope.row.userName"><b>{{scope.row.userName}}</b></a>
@@ -13,7 +13,7 @@
         </template>
       </el-table-column>
       <el-table-column
-              width="200px"
+              width="180px"
               label="内容"
               prop="nr">
       </el-table-column>
@@ -23,7 +23,7 @@
               prop="createTime">
       </el-table-column>
       <el-table-column
-              width="100px"
+              width="300px"
               label="操作相关">
         <template slot-scope="scope">
           <a href="#" @click="" v-if="scope.row.objectName"><b>{{scope.row.objectName}}</b></a>
@@ -31,7 +31,7 @@
         </template>
       </el-table-column>
       <el-table-column
-              width="300px"
+              width="180px"
               align="right">
         <template slot="header" slot-scope="scope">
           <el-input

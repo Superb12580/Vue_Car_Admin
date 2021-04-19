@@ -62,6 +62,10 @@
                                 <i class="el-icon-menu"></i>
                                 <span slot="title">轮播图</span>
                             </el-menu-item>
+                            <el-menu-item index="/style">
+                                <i class="el-icon-menu"></i>
+                                <span slot="title">车型</span>
+                            </el-menu-item>
                             <el-menu-item index="/car">
                                 <i class="el-icon-menu"></i>
                                 <span slot="title">车</span>
@@ -112,6 +116,22 @@
                         <i class="el-icon-document"></i>
                         <span slot="title">标签维护</span>
                     </el-menu-item>
+                    <el-submenu index="5">
+                        <template slot="title">
+                            <i class="el-icon-location"></i>
+                            <span>数据处理</span>
+                        </template>
+                        <el-menu-item-group>
+                            <el-menu-item index="/data_type">
+                                <i class="el-icon-menu"></i>
+                                <span slot="title">数据类型</span>
+                            </el-menu-item>
+                            <el-menu-item index="/data_dictionary">
+                                <i class="el-icon-menu"></i>
+                                <span slot="title">数据字典</span>
+                            </el-menu-item>
+                        </el-menu-item-group>
+                    </el-submenu>
                     <el-menu-item index="/rz">
                         <i class="el-icon-setting"></i>
                         <span slot="title">日志管理</span>
@@ -184,7 +204,8 @@
         width: 1300px;
         height: 100px;
         /*background-color: #ddd;*/
-        margin: 10px auto;
+        margin: 0 auto;
+        padding-bottom: 10px;
         border: 1px solid #ccc;
     }
 

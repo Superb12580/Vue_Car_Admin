@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="margin-left: 900px">
+        <div style="margin-left: 900px;margin-top: 20px">
             <el-button type="text" @click="dialogFormVisible = true, resetForm('foldForm')">添加折叠板</el-button>
         </div>
         <el-table height="530px"

@@ -103,13 +103,13 @@
             <el-button style="float: right" type="text" @click="dialogForm2Visible = true">更多</el-button>
         </div>
 <!--        弹出框-->
-        <el-dialog title="工作日志" :visible.sync="dialogFormVisible">
-            <el-table height="445px"
+        <el-dialog title="工作日志" :visible.sync="dialogFormVisible" width="1000px">
+            <el-table height="460px"
                       stripe
                       :data="page2.records.filter(data => !search || data.text.toLowerCase().includes(search.toLowerCase()))"
                       style="width: 100%;padding-left: 20px;padding-right: 20px">
                 <el-table-column
-                        width="320px"
+                        width="550px"
                         label="执行内容"
                         prop="text">
                 </el-table-column>

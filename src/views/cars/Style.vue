@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="margin-left: 830px;margin-top: 20px">
-      <el-button style="float: right" type="text" @click="tj()" size="medium">添加Car</el-button>
+      <el-button style="float: right" type="text" @click="tj()" size="medium">添加车型</el-button>
     </div>
     <el-table height="530px"
               stripe
@@ -71,7 +71,7 @@
     </div>
     <el-dialog title="添加" :visible.sync="dialogFormTjVisible">
       <el-form :model="styleForm" :rules="rulesStyle" ref="styleForm" label-width="80px" class="demo-ruleForm" style="margin: 0 50px">
-        <el-form-item label="Car" prop="styleName">
+        <el-form-item label="车型名称" prop="styleName">
         </el-form-item>
         <el-form-item label="轮播图" prop="stylePhoto">
           <el-upload
@@ -98,7 +98,7 @@
 </template>
 
 <script>export default {
-  name: 'Car',
+  name: 'Style',
   // 页面刷新
   inject: ['reload'],
   data() {

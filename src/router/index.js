@@ -23,6 +23,11 @@ const routes = [
         component: () => import('../views/cars/Car.vue')
       },
       {
+        path: '/style',
+        name: 'Style',
+        component: () => import('../views/cars/Style.vue')
+      },
+      {
         path: '/lbt',
         name: 'Lbt',
         component: () => import('../views/cars/Lbt.vue')
@@ -91,6 +96,16 @@ const routes = [
         path: '/zdb',
         name: 'Zdb',
         component: () => import('../views/Zdb.vue')
+      },
+      {
+        path: '/data_type',
+        name: 'DataType',
+        component: () => import('../views/DataType.vue')
+      },
+      {
+        path: '/data_dictionary',
+        name: 'DataDictionary',
+        component: () => import('../views/DataDictionary.vue')
       }
     ]
   },

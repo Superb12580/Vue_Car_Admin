@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="margin-left: 900px">
+        <div style="margin-left: 900px;margin-top: 20px">
             <el-button type="text" @click="tj">添加标签</el-button>
         </div>
         <el-table height="500px"
