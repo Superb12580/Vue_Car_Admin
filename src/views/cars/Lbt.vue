@@ -219,6 +219,7 @@
       }, function (error) {
         console.log(error)
       })
+      this.resetForm('lbtForm')
     },
     // 添加保存
     submitLbtForm(formName) {

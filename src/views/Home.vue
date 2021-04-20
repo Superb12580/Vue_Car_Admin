@@ -68,7 +68,7 @@
                             </el-menu-item>
                             <el-menu-item index="/car">
                                 <i class="el-icon-menu"></i>
-                                <span slot="title">车</span>
+                                <span slot="title">Car</span>
                             </el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>

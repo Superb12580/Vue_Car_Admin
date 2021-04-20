@@ -142,7 +142,7 @@
         type: 'error'
       }).then(() => {
         const that = this
-        this.axios.post('/record/deleteAdmin', {id :row.id}).then(function (rest) {
+        this.axios.post('/record/deleteAdmin', {id :row.id, nr: row.nr}).then(function (rest) {
           that.msg(rest.data.msg)
           // 刷新页面
           that.reload()

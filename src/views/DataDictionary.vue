@@ -7,7 +7,7 @@
             <el-table-column
                     width="150px"
                     label="父节点"
-                    prop="parent">
+                    prop="fjd">
             </el-table-column>
             <el-table-column
                     width="150px"
