@@ -21,6 +21,13 @@
               prop="sssj">
       </el-table-column>
       <el-table-column
+              width="90px"
+              label="环保标准">
+        <template slot-scope="scope">
+          <span>{{scope.row.hbbz === 0 ? '国V' : '国VI'}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
               width="150px"
               label="价格区间"
               prop="jgqj">
@@ -31,12 +38,12 @@
               prop="xl">
       </el-table-column>
       <el-table-column
-              width="120px"
+              width="100px"
               label="点击量"
               prop="djl">
       </el-table-column>
       <el-table-column
-              width="120px"
+              width="90px"
               label="状态">
         <template slot-scope="scope">
           <span v-if="scope.row.deleted === 0"><b>已上架</b></span>
@@ -44,7 +51,7 @@
         </template>
       </el-table-column>
       <el-table-column
-              width="240px"
+              width="200px"
               align="right">
         <template slot="header" slot-scope="scope">
           <el-input
@@ -53,12 +60,15 @@
                   placeholder="输入关键字搜索"/>
         </template>
         <template slot-scope="scope">
-          <el-button size="mini" type="text" @click="cktj(scope.$index, scope.row)">查看</el-button>
-          <el-button size="mini" type="text" @click="sctj(scope.$index, scope.row)">上传图集</el-button>
           <el-button v-if="scope.row.deleted === 0" size="mini" type="text" @click="handleDelete(scope.$index, scope.row)">下架</el-button>
           <el-button v-else size="mini" type="text" @click="sj(scope.$index, scope.row)"><span style="color: red">上架</span></el-button>
           <el-button size="mini" type="text" @click="edit(scope.$index, scope.row)">编辑</el-button>
+          <el-button size="mini" type="text" @click="sctj(scope.$index, scope.row)">上传</el-button>
+          <el-button size="mini" type="text" @click="cktj(scope.$index, scope.row)">查看图集</el-button>
+
+
           <el-button size="mini" type="text" @click="carXq(scope.$index, scope.row)">相关Car</el-button>
+          <el-button size="mini" type="text" @click="tjCar(scope.$index, scope.row)">下级增加</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -73,7 +83,7 @@
               :total="page.total">
       </el-pagination>
     </div>
-    <el-dialog title="添加" :visible.sync="dialogFormTjVisible">
+    <el-dialog title="添加车型" :visible.sync="dialogFormTjVisible">
       <el-form :model="styleForm" :rules="rulesStyle" ref="styleForm" label-width="80px" class="demo-ruleForm" style="margin: 0 50px">
         <el-form-item label="车型名称" prop="styleName">
           <el-input style="width: 300px" v-model="styleForm.styleName"></el-input>
@@ -147,7 +157,7 @@
         </el-form-item>
       </el-form>
     </el-dialog>
-    <el-dialog title="编辑" :visible.sync="dialogFormBjVisible">
+    <el-dialog title="编辑车型" :visible.sync="dialogFormBjVisible">
       <el-form :model="styleForm2" :rules="rulesStyle2" ref="styleForm2" label-width="80px" class="demo-ruleForm" style="margin: 0 50px">
         <el-form-item label="车型名称" prop="styleName">
           <el-input style="width: 300px" v-model="styleForm2.styleName"></el-input>
@@ -329,6 +339,125 @@
         </el-row>
       </div>
     </el-dialog>
+    <el-dialog title="添加Car" :visible.sync="dialogFormTjCarVisible">
+      <el-form :model="carForm" :rules="rulesCar" ref="carForm" label-width="200px" class="demo-ruleForm" style="margin: 0 50px">
+        <el-form-item label="Car名称" prop="carName">
+          <el-input style="width: 300px" placeholder="请输入内容" v-model="carForm.carName"></el-input>
+        </el-form-item>
+        <el-form-item label="厂商指导价" prop="cszdj">
+          <el-input style="width: 300px" placeholder="请输入内容" v-model="carForm.cszdj">
+            <template slot="append">单位（万）</template>
+          </el-input>
+        </el-form-item>
+        <el-form-item label="轴距" prop="zj">
+          <el-input style="width: 300px" placeholder="请输入内容" v-model="carForm.zj">
+            <template slot="append">单位（mm）</template>
+          </el-input>
+        </el-form-item>
+        <el-form-item label="油箱容积" prop="yxrj">
+          <el-input style="width: 300px" placeholder="请输入内容" v-model="carForm.yxrj">
+            <template slot="append">单位（L）</template>
+          </el-input>
+        </el-form-item>
+        <el-form-item label="发动机型号" prop="fdjxh">
+          <el-input style="width: 300px" placeholder="请输入内容" v-model="carForm.fdjxh"></el-input>
+        </el-form-item>
+        <el-form-item label="排量" prop="pl">
+          <el-input style="width: 300px" placeholder="请输入内容" v-model="carForm.pl">
+            <template slot="append">单位（L）</template>
+          </el-input>
+        </el-form-item>
+        <el-form-item label="车长" prop="cc">
+          <el-input style="width: 300px" placeholder="请输入内容" v-model="carForm.cc">
+            <template slot="append">单位（mm）</template>
+          </el-input>
+        </el-form-item>
+        <el-form-item label="车宽" prop="ck">
+          <el-input style="width: 300px" placeholder="请输入内容" v-model="carForm.ck">
+            <template slot="append">单位（mm）</template>
+          </el-input>
+        </el-form-item>
+        <el-form-item label="车高" prop="cg">
+          <el-input style="width: 300px" placeholder="请输入内容" v-model="carForm.cg">
+            <template slot="append">单位（mm）</template>
+          </el-input>
+        </el-form-item>
+        <el-form-item label="最大扭矩" prop="zdnj">
+          <el-input style="width: 300px" placeholder="请输入内容" v-model="carForm.zdnj">
+            <template slot="append">单位（N*m）</template>
+          </el-input>
+        </el-form-item>
+        <el-form-item label="进气方式" prop="jqfs">
+          <el-select style="width: 300px" clearable filterable v-model="carForm.jqfs" placeholder="请选择">
+            <el-option
+                    v-for="item in optionsJqfs"
+                    :key="item.id"
+                    :label="item.data"
+                    :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="驱动方式" prop="qdfs">
+          <el-select style="width: 300px" clearable filterable v-model="carForm.qdfs" placeholder="请选择">
+            <el-option
+                    v-for="item in optionsQdfs"
+                    :key="item.id"
+                    :label="item.data"
+                    :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="制动类型" prop="zdlx">
+          <el-select style="width: 300px" clearable filterable v-model="carForm.zdlx" placeholder="请选择">
+            <el-option
+                    v-for="item in optionsZdlx"
+                    :key="item.id"
+                    :label="item.data"
+                    :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="最大马力" prop="zdml">
+          <el-input style="width: 300px" placeholder="请输入内容" v-model="carForm.zdml">
+            <template slot="append">单位（Ps）</template>
+          </el-input>
+        </el-form-item>
+        <el-form-item label="最大功率" prop="zdgl">
+          <el-input style="width: 300px" placeholder="请输入内容" v-model="carForm.zdgl">
+            <template slot="append">单位（kW）</template>
+          </el-input>
+        </el-form-item>
+        <el-form-item label="百公里加速" prop="bgljs">
+          <el-input style="width: 300px" placeholder="请输入内容" v-model="carForm.bgljs">
+            <template slot="append">单位（s）</template>
+          </el-input>
+        </el-form-item>
+        <el-form-item label="百公里油耗" prop="bglyh">
+          <el-input style="width: 300px" placeholder="请输入内容" v-model="carForm.bglyh">
+            <template slot="append">单位（L）</template>
+          </el-input>
+        </el-form-item>
+        <el-form-item label="最高车速" prop="zgcs">
+          <el-input style="width: 300px" placeholder="请输入内容" v-model="carForm.zgcs">
+            <template slot="append">单位（Km/h）</template>
+          </el-input>
+        </el-form-item>
+        <el-form-item label="燃油标号" prop="rybh">
+          <el-select style="width: 300px" clearable filterable v-model="carForm.rybh" placeholder="请选择">
+            <el-option
+                    v-for="item in optionsRybh"
+                    :key="item.id"
+                    :label="item.data"
+                    :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitLbtFormCar ('carForm')">保存</el-button>
+          <el-button @click="resetForm ('carForm')">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -367,12 +496,22 @@
       optionsHbbz: [],
       // 能源类型
       optionsNylx: [],
+      // 制动类型
+      optionsZdlx: [],
+      // 驱动方式
+      optionsQdfs: [],
+      // 燃油标号
+      optionsRybh: [],
+      // 进气方式
+      optionsJqfs: [],
       dialogFormTjVisible: false,
       dialogFormBjVisible: false,
       dialogFormCarVisible: false,
       dialogFormSctjVisible: false,
       dialogFormCktjVisible: false,
       dialogFormXsxgVisible: false,
+      dialogFormTjCarVisible: false,
+      // style添加
       styleForm: {
         styleName: '',
         cs: '',
@@ -394,6 +533,7 @@
         hbbz: {required: true, message: '请输入环保标准', trigger: 'change'},
         nylx: {required: true, message: '请输入能源类型', trigger: 'change'}
       },
+      // style编辑
       styleForm2: {
         styleId: '',
         styleName: '',
@@ -415,7 +555,51 @@
         sssj: {required: true, message: '请输入上市时间', trigger: 'change'},
         hbbz: {required: true, message: '请输入环保标准', trigger: 'change'},
         nylx: {required: true, message: '请输入能源类型', trigger: 'change'}
-      }
+      },
+      // car添加
+      carForm: {
+        carName: '',
+        styleId: '',
+        cszdj: '',
+        zdnj: '',
+        cc: '',
+        ck: '',
+        cg: '',
+        zj: '',
+        yxrj: '',
+        fdjxh: '',
+        pl: '',
+        jqxs: '',
+        zdml: '',
+        zdgl: '',
+        qdfs: '',
+        zdlx: '',
+        bgljs: '',
+        bglyh: '',
+        zgcs: '',
+        rybh: ''
+      },
+      rulesCar: {
+        carName: {required: true, message: '请输入内容', trigger: 'change'},
+        cszdj: {required: true, message: '请输入内容', trigger: 'change'},
+        zdnj: {required: true, message: '请输入内容', trigger: 'change'},
+        cc: {required: true, message: '请输入内容', trigger: 'change'},
+        ck: {required: true, message: '请输入内容', trigger: 'change'},
+        cg: {required: true, message: '请输入内容', trigger: 'change'},
+        zj: {required: true, message: '请输入内容', trigger: 'change'},
+        yxrj: {required: true, message: '请输入内容', trigger: 'change'},
+        fdjxh: {required: true, message: '请输入内容', trigger: 'change'},
+        pl: {required: true, message: '请输入内容', trigger: 'change'},
+        jqfs: {required: true, message: '请输入内容', trigger: 'change'},
+        zdml: {required: true, message: '请输入内容', trigger: 'change'},
+        zdgl: {required: true, message: '请输入内容', trigger: 'change'},
+        qdfs: {required: true, message: '请输入内容', trigger: 'change'},
+        zdlx: {required: true, message: '请输入内容', trigger: 'change'},
+        bgljs: {required: true, message: '请输入内容', trigger: 'change'},
+        bglyh: {required: true, message: '请输入内容', trigger: 'change'},
+        zgcs: {required: true, message: '请输入内容', trigger: 'change'},
+        rybh: {required: true, message: '请输入内容', trigger: 'change'}
+      },
     }
   },
   methods: {
@@ -428,6 +612,7 @@
       })
     },
     tj() {
+      this.csh()
       this.dialogFormTjVisible = true
       this.resetForm('styleForm')
     },
@@ -615,6 +800,7 @@
       })
     },
     edit(index, row) {
+      this.csh()
       this.dialogFormBjVisible = true
       this.styleForm2 = row
       this.resetForm('styleForm2')
@@ -634,32 +820,83 @@
       }, function (error) {
         console.log(error)
       })
+    },
+    // 初始化style下拉框
+    csh(){
+      const that = this
+      this.axios.get('/data-dictionary/itemCs').then(function (rest) {
+        that.optionsCs = rest.data.data
+      }, function (error) {
+        console.log(error)
+      })
+      this.axios.get('/data-dictionary/itemJb').then(function (rest) {
+        that.optionsJb = rest.data.data
+      }, function (error) {
+        console.log(error)
+      })
+      this.axios.get('/data-dictionary/itemHbbz').then(function (rest) {
+        that.optionsHbbz = rest.data.data
+      }, function (error) {
+        console.log(error)
+      })
+      this.axios.get('/data-dictionary/itemNylx').then(function (rest) {
+        that.optionsNylx = rest.data.data
+      }, function (error) {
+        console.log(error)
+      })
+    },
+    // 初始化car下拉框
+    cshCar(){
+      const that = this
+      this.axios.get('/data-dictionary/itemJqfs').then(function (rest) {
+        that.optionsJqfs = rest.data.data
+      }, function (error) {
+        console.log(error)
+      })
+      this.axios.get('/data-dictionary/itemRybh').then(function (rest) {
+        that.optionsRybh = rest.data.data
+      }, function (error) {
+        console.log(error)
+      })
+      this.axios.get('/data-dictionary/itemQdfs').then(function (rest) {
+        that.optionsQdfs = rest.data.data
+      }, function (error) {
+        console.log(error)
+      })
+      this.axios.get('/data-dictionary/itemZdlx').then(function (rest) {
+        that.optionsZdlx = rest.data.data
+      }, function (error) {
+        console.log(error)
+      })
+    },
+    tjCar(index, row){
+      this.cshCar()
+      this.dialogFormTjCarVisible = true
+      // 关联车型
+      this.carForm.styleId = row.styleId
+      this.resetForm('carForm')
+    },
+    submitLbtFormCar(formName) {
+      const that = this
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.axios.post('/car/saveAdmin', this.carForm).then(function (rest) {
+            that.msg(rest.data.msg)
+            that.dialogFormTjCarVisible = false
+          }, function (error) {
+            console.log(error)
+          })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     }
   },
   created() {
     const that = this
     this.axios.get('/style/listAdmin').then(function (rest) {
       that.page = rest.data.data
-    }, function (error) {
-      console.log(error)
-    })
-    this.axios.get('/data-dictionary/itemCs').then(function (rest) {
-      that.optionsCs = rest.data.data
-    }, function (error) {
-      console.log(error)
-    })
-    this.axios.get('/data-dictionary/itemJb').then(function (rest) {
-      that.optionsJb = rest.data.data
-    }, function (error) {
-      console.log(error)
-    })
-    this.axios.get('/data-dictionary/itemHbbz').then(function (rest) {
-      that.optionsHbbz = rest.data.data
-    }, function (error) {
-      console.log(error)
-    })
-    this.axios.get('/data-dictionary/itemNylx').then(function (rest) {
-      that.optionsNylx = rest.data.data
     }, function (error) {
       console.log(error)
     })

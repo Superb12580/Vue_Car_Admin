@@ -24,7 +24,7 @@
                 </router-link>
             </div>
             <div class="a3" style="background-color: #926DDE">
-                <router-link :to="{path: '/'}">
+                <router-link :to="{path: '/style'}">
               <div style="float: left;width: 130px;height: 120px">
                 <img src="../assets/sy3.jpg" style="width: 100px"/>
               </div>

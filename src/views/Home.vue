@@ -219,7 +219,7 @@
     .right {
         width: 1040px;
         float: right;
-        margin-right: 110px;
+        margin-right: 100px;
     }
 
     .right_center {
