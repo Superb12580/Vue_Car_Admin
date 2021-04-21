@@ -132,6 +132,16 @@
             </el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="国别" prop="gb">
+          <el-select style="width: 300px" clearable filterable v-model="styleForm.gb" placeholder="请选择">
+            <el-option
+                    v-for="item in optionsGb"
+                    :key="item.id"
+                    :label="item.data"
+                    :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="能源类型" prop="nylx">
           <el-select style="width: 300px" clearable filterable v-model="styleForm.nylx" placeholder="请选择">
             <el-option
@@ -199,6 +209,16 @@
           <el-select style="width: 300px" clearable filterable v-model="styleForm2.jb" placeholder="请选择">
             <el-option
                     v-for="item in optionsJb"
+                    :key="item.id"
+                    :label="item.data"
+                    :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="国别" prop="gb">
+          <el-select style="width: 300px" clearable filterable v-model="styleForm2.gb" placeholder="请选择">
+            <el-option
+                    v-for="item in optionsGb"
                     :key="item.id"
                     :label="item.data"
                     :value="item.id">
@@ -492,6 +512,8 @@
       optionsCs: [],
       // 级别
       optionsJb: [],
+      // 国别
+      optionsGb: [],
       // 环保标准
       optionsHbbz: [],
       // 能源类型
@@ -518,6 +540,7 @@
         jgqj: '',
         stylePhoto: '',
         jb: '',
+        gb: '',
         sssj: '',
         hbbz: '',
         nylx: '',
@@ -529,6 +552,7 @@
         jgqj: {required: true, message: '请输入价格区间', trigger: 'change'},
         stylePhoto: {required: true, message: '待上传', trigger: 'change'},
         jb: {required: true, message: '请关联级别', trigger: 'change'},
+        gb: {required: true, message: '请关联国别', trigger: 'change'},
         sssj: {required: true, message: '请输入上市时间', trigger: 'change'},
         hbbz: {required: true, message: '请输入环保标准', trigger: 'change'},
         nylx: {required: true, message: '请输入能源类型', trigger: 'change'}
@@ -541,6 +565,7 @@
         jgqj: '',
         stylePhoto: '',
         jb: '',
+        gb: '',
         sssj: '',
         hbbz: '',
         nylx: '',
@@ -552,6 +577,7 @@
         jgqj: {required: true, message: '请输入价格区间', trigger: 'change'},
         stylePhoto: {required: true, message: '待上传', trigger: 'change'},
         jb: {required: true, message: '请关联级别', trigger: 'change'},
+        gb: {required: true, message: '请关联国别', trigger: 'change'},
         sssj: {required: true, message: '请输入上市时间', trigger: 'change'},
         hbbz: {required: true, message: '请输入环保标准', trigger: 'change'},
         nylx: {required: true, message: '请输入能源类型', trigger: 'change'}
@@ -826,6 +852,11 @@
       const that = this
       this.axios.get('/data-dictionary/itemCs').then(function (rest) {
         that.optionsCs = rest.data.data
+      }, function (error) {
+        console.log(error)
+      })
+      this.axios.get('/data-dictionary/itemGb').then(function (rest) {
+        that.optionsGb = rest.data.data
       }, function (error) {
         console.log(error)
       })
