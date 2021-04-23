@@ -192,8 +192,8 @@
           </el-input>
         </el-form-item>
         <el-form-item label="环保标准" prop="hbbz">
-          <el-radio v-model="styleForm2.hbbz" :label="0">国V</el-radio>
-          <el-radio v-model="styleForm2.hbbz" :label="1">国VI</el-radio>
+          <el-radio v-model="styleForm2.hbbz" :label="149">国V</el-radio>
+          <el-radio v-model="styleForm2.hbbz" :label="150">国VI</el-radio>
         </el-form-item>
         <el-form-item label="厂商" prop="cs">
           <el-select style="width: 300px" clearable filterable v-model="styleForm2.cs" placeholder="请选择">
