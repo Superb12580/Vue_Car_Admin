@@ -53,6 +53,26 @@ const routes = [
         component: () => import('../views/essay/Dtxq.vue')
       },
       {
+        path: '/spdsh',
+        name: 'SpDsh',
+        component: () => import('../views/video/SpDsh.vue')
+      },
+      {
+        path: '/spyfb',
+        name: 'SpYfb',
+        component: () => import('../views/video/SpYfb.vue')
+      },
+      {
+        path: '/spybh',
+        name: 'SpYbh',
+        component: () => import('../views/video/SpYbh.vue')
+      },
+      {
+        path: '/spxq',
+        name: 'Spxq',
+        component: () => import('../views/video/Spxq.vue')
+      },
+      {
         path: '/dsh',
         name: 'Dsh',
         component: () => import('../views/news/Dsh.vue')
@@ -113,11 +133,6 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: () => import('../views/Login.vue')
-  },
-  {
-    path: '/login2',
-    name: 'Login2',
-    component: () => import('../views/Login2.vue')
   }
 ]
 
