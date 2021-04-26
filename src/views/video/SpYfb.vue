@@ -6,7 +6,7 @@
         <!--新闻图-->
         <div class="xwt">
           <router-link :to="{path: '/spxq',query: {id: video.id}}">
-            <img style="width: 100%;height: 100%" :src="video.videoUrl">
+            <video style="width: 100%;height: 100%" :src="video.videoUrl"></video>
           </router-link>
         </div>
         <!--新闻右侧-->

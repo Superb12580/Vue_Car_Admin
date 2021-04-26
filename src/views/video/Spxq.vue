@@ -1,9 +1,13 @@
 <template>
   <div>
     <div class="left2">
-      <div class="title" style="text-align: center;padding-top: 15px"><h2>{{video.title}}</h2></div>
+      <div class="title" style="text-align: center;padding-top: 15px"><h2>{{video.videoTitle}}</h2></div>
       <div class="time" style="text-align: center"><h4>发布时间：<span style="color: #ff6700;margin-right: 30px">{{video.createTime}}</span>点击量：<span style="color: #ff6700">{{video.count}}</span></h4></div>
       <div class="text">{{video.videoText}}</div>
+      <br>
+      <video width="800px" height="500px" :src="video.videoUrl" controls="controls">
+        您的浏览器不支持 video 标签。
+      </video>
     </div>
   </div>
 </template>
