@@ -178,7 +178,7 @@
                 </router-link>
             </div>
             <div class="a1" style="background-color: #15C377;margin-top: 30px">
-                <router-link :to="{path: '/'}">
+                <router-link :to="{path: '/spyfb'}">
                     <div style="float: left;width: 130px;height: 120px">
                         <img src="../assets/sy4.jpg" style="width: 100px"/>
                     </div>

@@ -9,7 +9,7 @@
         </h4>
       </div>
       <el-divider></el-divider>
-      <div class="markdown-body" v-html="essay.essayText"></div>
+      <div style="overflow:auto" class="markdown-body" v-html="essay.essayText"></div>
     </div>
     <div id="homepage">
       <div class="box">
