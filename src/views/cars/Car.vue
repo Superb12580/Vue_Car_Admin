@@ -181,6 +181,9 @@
         </el-form-item>
       </el-form>
     </el-dialog>
+    <el-dialog title="Car详情" :visible.sync="dialogFormCarXqVisible">
+      <h2>Car详情待完善</h2>
+    </el-dialog>
   </div>
 </template>
 
@@ -206,6 +209,8 @@
       // 进气方式
       optionsJqfs: [],
       dialogFormBjCarVisible: false,
+      dialogFormCarXqVisible: false,
+      car: {},
       // car编辑
       carForm: {
         carId: '',
@@ -269,6 +274,10 @@
       this.cshCar()
       this.dialogFormBjCarVisible = true
       this.carForm = row
+    },
+    xq(index, row) {
+      this.dialogFormCarXqVisible = true
+      this.car = row
     },
     // 编辑保存
     submitLbtFormCar(formName) {
