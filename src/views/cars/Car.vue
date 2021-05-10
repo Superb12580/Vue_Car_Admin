@@ -47,7 +47,6 @@
           <el-button v-if="scope.row.deleted === 0" style="margin-left: 30px" size="mini" type="text" @click="handleDeleteCar(scope.$index, scope.row)">下架</el-button>
           <el-button v-else size="mini" type="text" @click="sjCar(scope.$index, scope.row)"><span style="color: red">上架</span></el-button>
           <el-button size="mini" type="text" @click="bj(scope.$index, scope.row)">编辑</el-button>
-          <el-button size="mini" type="text" @click="xq(scope.$index, scope.row)">详情</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -181,9 +180,6 @@
         </el-form-item>
       </el-form>
     </el-dialog>
-    <el-dialog title="Car详情" :visible.sync="dialogFormCarXqVisible">
-      <h2>Car详情待完善</h2>
-    </el-dialog>
   </div>
 </template>
 
@@ -209,8 +205,6 @@
       // 进气方式
       optionsJqfs: [],
       dialogFormBjCarVisible: false,
-      dialogFormCarXqVisible: false,
-      car: {},
       // car编辑
       carForm: {
         carId: '',
@@ -274,10 +268,6 @@
       this.cshCar()
       this.dialogFormBjCarVisible = true
       this.carForm = row
-    },
-    xq(index, row) {
-      this.dialogFormCarXqVisible = true
-      this.car = row
     },
     // 编辑保存
     submitLbtFormCar(formName) {
@@ -383,7 +373,6 @@
     }
   },
   created() {
-
     const that = this
     this.axios.get('/car/listAdmin').then(function (rest) {
       that.page = rest.data.data

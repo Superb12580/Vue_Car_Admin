@@ -330,13 +330,14 @@
     </div>
     </el-dialog>
     <el-dialog title="查看图集" :visible.sync="dialogFormCktjVisible" width="900px">
-      <div>
+      <div v-if="imgLbt.length !== 0">
         <el-carousel :interval="4000" type="card" height="300px" style="width: 800px;margin: 0 auto">
           <el-carousel-item v-for="(item,index) in imgLbt" :key="index">
             <img :src="item.photoUrl" style="height: 300px">
           </el-carousel-item>
         </el-carousel>
       </div>
+      <div v-else><h2 style="color: red">暂无数据</h2></div>
     </el-dialog>
     <el-dialog title="显示效果" :visible.sync="dialogFormXsxgVisible" width="1400px">
       <a style="color: #999;margin-left: 1300px;" href="javascript:;" @click="refresh"><i></i><span>换一换</span></a>
