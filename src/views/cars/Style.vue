@@ -24,7 +24,7 @@
               width="90px"
               label="环保标准">
         <template slot-scope="scope">
-          <span>{{scope.row.hbbz === 0 ? '国V' : '国VI'}}</span>
+          <span>{{scope.row.hbbz === 149 ? '国V' : '国VI'}}</span>
         </template>
       </el-table-column>
       <el-table-column
